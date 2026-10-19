@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forecast-optimize"
+version = "0.1.0"
+description = "Predict-then-optimise for electricity demand: probabilistic day-ahead load forecasts (LightGBM quantiles + split conformal) feeding a two-stage stochastic procurement / battery MILP, served over a REST API."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Urban Ogrinec" }]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "lightgbm>=4.3",
+    "highspy>=1.7",
+    "fastapi>=0.110",
+    "pydantic>=2.5",
+    "uvicorn>=0.27",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.5"]
+postgres = ["psycopg[binary]>=3.1"]
+
+[project.scripts]
+forecast-optimize = "forecast_optimize.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+forecast_optimize = ["storage/migrations/*/*.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore:The anyio.abc.BlockingPortal alias is deprecated:DeprecationWarning"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "NPY", "RUF"]
+ignore = ["E501", "RUF001", "RUF002", "RUF003", "N803", "N806"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B017"]

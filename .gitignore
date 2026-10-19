@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# environments
+.venv/
+venv/
+env/
+
+# generated data and databases (regenerate with `make data` / `make experiment`)
+/data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+results/decisions.csv
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
