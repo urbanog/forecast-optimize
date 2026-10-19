@@ -55,8 +55,8 @@ again. No number below was typed by hand. Full pipeline runtime: about 1 minute
 on one CPU core.
 
 **Forecasting.** Rolling-origin back-test over all of 2024: 6 folds × 61 days =
-8 784 test hours. Before each origin the model is refit on all earlier data and
-recalibrated on the 112 days just before the origin.
+8 784 test hours. Before each origin the model is refit on all data before the calibration
+block and recalibrated on the 112 days just before the origin.
 
 | model | MAE [MW] | RMSE [MW] | MAPE [%] | pinball raw | pinball conformal | 90% cov. raw | 90% cov. conformal | 90% width [MW] | 80% cov. conformal |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -311,8 +311,9 @@ objective.
 simultaneous charging and discharging. `solve_day(mip="auto")` first solves
 the LP relaxation. The relaxation's optimal value is a lower bound for the
 MILP, so if its optimum already has $\min(c_t,d_t)=0$ for all $t$, it is
-MILP-feasible and therefore MILP-optimal. Otherwise the MILP is solved. With
-In the back-test the fallback was never needed (see the results notes), and the LP is about 10× faster than the MILP. A test
+MILP-feasible and therefore MILP-optimal. Otherwise the MILP is solved. In
+the back-test the fallback was never needed (see the results notes), and the
+LP is about 10× faster than the MILP. A test
 constructs negative prices, where the relaxation "burns" energy by charging
 and discharging at once, and checks that the fallback triggers.
 
