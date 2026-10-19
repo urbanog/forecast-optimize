@@ -133,9 +133,10 @@ def generate(config: SyntheticConfig | None = None) -> pd.DataFrame:
     # daily anomaly anchored at noon, linearly interpolated to hours
     day_pos = np.arange(len(days) + 1) * 24.0 + 12.0
     z = np.interp(np.arange(n), day_pos, z_day)
-    diurnal_amp = 0.5 * (cfg.temp_diurnal_winter + cfg.temp_diurnal_summer) - 0.5 * (
-        cfg.temp_diurnal_summer - cfg.temp_diurnal_winter
-    ) * ann
+    diurnal_amp = (
+        0.5 * (cfg.temp_diurnal_winter + cfg.temp_diurnal_summer)
+        - 0.5 * (cfg.temp_diurnal_summer - cfg.temp_diurnal_winter) * ann
+    )
     temp = (
         cfg.temp_mean
         - cfg.temp_annual_amp * ann
