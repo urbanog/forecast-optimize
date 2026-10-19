@@ -86,9 +86,11 @@ battery parameters of §4. Each plan is scored on the realised load.
 **What these numbers say**
 
 * LightGBM with lag, calendar and weather-forecast features beats the Fourier
-  regression (MAE −11 %) and the seasonal naive model (−50 %). Most of the
-  remaining error sits on holidays and bridge days (see the shaded days in the
-  first figure): there are only about a dozen such days per year to learn from.
+  regression (MAE −10 %) and the seasonal naive model (−50 %). Holidays and
+  bridge days are the hardest hours (MAE 36.3 MW against 23.8 MW on other days;
+  see the shaded days in the first figure): there are only about a dozen such
+  days per year to learn from. They are only 5.5 % of the test hours, though,
+  so they account for about 8 % of the total absolute error.
 * **Raw quantile regression is over-confident.** Its 90 % intervals cover only
   79.5 % of test hours, because gradient-boosted quantiles fit the training
   data too closely. Split-conformal calibration brings coverage to **89.7 %**,
